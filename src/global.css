@@ -1,0 +1,8 @@
+--global-grey {
+  background-color: rgb(245 245 245);
+}
+
+canvas {
+  outline: none;
+  border: none;
+}
