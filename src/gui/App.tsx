@@ -10,14 +10,14 @@ const App = () => {
 
   useEffect(() => {
     let childBox1 = {
-      style: { width: "20%", height: 3, depth: 2, color: "red" },
+      style: { width: "20%", height: 3, depth: 2, color: "red", opacity: 0.5 },
     };
 
     let child2Child1 = {
-      style: { width: "10%", height: 2, depth: 2, color: "blue" },
+      style: { width: "30%", height: 2, depth: 2, color: "blue", opacity: 1 },
     };
     let child2Child2 = {
-      style: { width: "10%", height: 2, depth: 2, color: "green" },
+      style: { width: "70%", height: 2, depth: 2, color: "green", opacity: 1 },
     };
 
     let childBox2 = {
@@ -37,7 +37,7 @@ const App = () => {
         height: 2,
         depth: 4,
         display: "flex",
-        justifyContent: "flex-end",
+        justifyContent: "center",
       },
       children: [childBox1, childBox2],
     };
@@ -60,28 +60,11 @@ const App = () => {
   }, []);
 
   const generateMesh = (divStructure: DivStructure) => {
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const edge = new THREE.EdgesGeometry(geometry);
-
-    const material = new THREE.LineBasicMaterial({
-      color: divStructure.style.color ?? "black",
-      transparent: true,
-      opacity: 0.5,
-    });
-
-    const ret = new THREE.LineSegments(edge, material);
+    let ret = getBox(divStructure);
 
     const runTree = (div: DivStructure, mesh: THREE.Object3D) => {
-      const geometry = new THREE.BoxGeometry(1, 1, 1);
-      const edge = new THREE.EdgesGeometry(geometry);
+      let box = getBox(div);
 
-      const material = new THREE.LineBasicMaterial({
-        color: div.style.color ?? "black",
-        transparent: true,
-        opacity: 0.5,
-      });
-
-      const box = new THREE.LineSegments(edge, material);
       mesh.add(box);
       if (div.children) {
         div.children.map((child) => {
@@ -97,6 +80,31 @@ const App = () => {
     }
 
     return ret;
+  };
+
+  const getBox = (divStructure: DivStructure) => {
+    if (!divStructure.style.opacity) {
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const edge = new THREE.EdgesGeometry(geometry);
+
+      const material = new THREE.LineBasicMaterial({
+        color: divStructure.style.color ?? "black",
+        transparent: true,
+        opacity: 0.5,
+      });
+
+      return new THREE.LineSegments(edge, material);
+    } else {
+      const geometry = new THREE.BoxGeometry();
+
+      const material = new THREE.LineBasicMaterial({
+        color: divStructure.style.color ?? "black",
+        transparent: true,
+        opacity: divStructure.style.opacity,
+      });
+
+      return new THREE.Mesh(geometry, material);
+    }
   };
 
   return (

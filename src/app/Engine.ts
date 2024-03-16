@@ -48,16 +48,18 @@ class Engine {
       mesh.position.z = this.div.position.z;
     }
 
-    if (this.div.position) {
-      let newGeometry = new THREE.BoxGeometry(
-        this.div.width,
-        this.div.height,
-        this.div.depth,
-      );
-      const edge = new THREE.EdgesGeometry(newGeometry);
+    if ("geometry" in mesh) {
+      if (this.div.position) {
+        let { geometry } = mesh;
 
-      mesh.geometry.dispose();
-      mesh.geometry = edge;
+        if (this.isGeometry(geometry)) {
+          var scaleFactorX = this.div.width ?? 1; // Change as needed
+          var scaleFactorY = this.div.height ?? 1;
+          var scaleFactorZ = this.div.depth ?? 1;
+
+          geometry.scale(scaleFactorX, scaleFactorY, scaleFactorZ);
+        }
+      }
     }
 
     if (this.div.children && mesh.children) {
@@ -80,22 +82,28 @@ class Engine {
         mesh.position.z = div.position.z;
       }
 
-      if (div?.position) {
-        let newGeometry = new THREE.BoxGeometry(
-          div.width,
-          div.height,
-          div.depth,
-        );
-        const edge = new THREE.EdgesGeometry(newGeometry);
+      if ("geometry" in mesh) {
+        if (div.position) {
+          let { geometry } = mesh;
 
-        mesh.geometry.dispose();
-        mesh.geometry = edge;
+          if (this.isGeometry(geometry)) {
+            var scaleFactorX = div.width ?? 1; // Change as needed
+            var scaleFactorY = div.height ?? 1;
+            var scaleFactorZ = div.depth ?? 1;
+
+            geometry.scale(scaleFactorX, scaleFactorY, scaleFactorZ);
+          }
+        }
       }
 
       if (div?.children && mesh.children) {
         this.runTreeSetup(mesh.children, div.children);
       }
     });
+  }
+
+  private isGeometry(obj: any): obj is THREE.BufferGeometry {
+    return "isBufferGeometry" in obj;
   }
 }
 

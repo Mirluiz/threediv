@@ -9,6 +9,7 @@ export interface CSSProps extends FlexProps, MarginProps, PaddingProps {
   height?: string | number;
   depth?: string | number;
   gap: string | number;
+  opacity: number;
   color: string;
 }
 
