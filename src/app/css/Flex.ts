@@ -113,7 +113,7 @@ class Flex {
           }
 
           if (this.div.width && child.width) {
-            leftOffset += +(emptySpace / (arr.length + 1)).toFixed(1);
+            leftOffset += +(emptySpace / (arr.length + 1)).toFixed(4);
 
             child.position.x =
               -this.div.width / 2 + child.width / 2 + leftOffset;

@@ -90,9 +90,9 @@ const App = () => {
         horizontalDiv.className = "horizontalDiv";
         horizontalDiv.style.position = "absolute";
         horizontalDiv.style.background = "black";
-        horizontalDiv.style.height = "1px";
+        horizontalDiv.style.height = "0.1px";
         horizontalDiv.style.width = "300px";
-        horizontalDiv.style.top = `${-1 + _i * 10}px`;
+        horizontalDiv.style.top = `${-0.1 + _i * 10}px`;
         horizontalDiv.style.left = `0`;
         horizontalDiv.style.right = `0`;
         horizontalDiv.style.zIndex = `-1`;
@@ -102,9 +102,9 @@ const App = () => {
         verticalDiv.style.position = "absolute";
         verticalDiv.style.background = "black";
         verticalDiv.style.height = "300px";
-        verticalDiv.style.width = "1px";
+        verticalDiv.style.width = "0.1px";
         verticalDiv.style.top = `0`;
-        verticalDiv.style.left = `${-1 + _i * 10}px`;
+        verticalDiv.style.left = `${-0.1 + _i * 10}px`;
         verticalDiv.style.zIndex = `-1`;
 
         cssDiv.current.appendChild(horizontalDiv);
@@ -128,6 +128,7 @@ const App = () => {
           <div id="child1"></div>
           <div id="child2"></div>
           <div id="child3"></div>
+          {/* <div id="child4"></div> */}
         </div>
       </Grid>
     </Grid>
