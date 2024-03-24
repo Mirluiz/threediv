@@ -5,10 +5,9 @@ export interface FlexProps {
   gap: string | number;
   flex: "";
   flexBasis: "";
-  flexDirection: "";
   flexGrow: "";
   flewShrink: "";
-  flexSirection: "row" | "row-reverse" | "column" | "column-reverse";
+  flexDirection: "row" | "row-reverse" | "column" | "column-reverse";
   flexWrap: "nowrap" | "wrap" | "wrap-reverse";
   justifyContent:
     | "flex-start"
@@ -45,6 +44,8 @@ class Flex {
 
       if (this.div.style.justifyContent) this.justify();
       if (this.div.style.alignItems) this.align();
+
+      this.direction();
     }
   }
 
@@ -256,7 +257,7 @@ class Flex {
     }
   }
 
-  protected align() {
+  private align() {
     let allChildrenDepth = this.div.children.reduce(
       (sum, child) => sum + (child.depth ?? 0),
       0,
@@ -304,6 +305,80 @@ class Flex {
 
         break;
       }
+    }
+  }
+
+  private direction() {
+    switch (this.div.style.flexDirection) {
+      case "column": {
+        let topOffset = 0;
+        this.div.children.map((child) => {
+          if (!child.position) {
+            child.position = { x: 0, y: 0, z: 0 };
+          }
+
+          if (
+            child.width &&
+            child.depth &&
+            this.div.width &&
+            child.style.width
+          ) {
+            let res = DivHelper.getVal(child.style.width);
+
+            if (res.percent) {
+              child.width = this.div.width * (res.val / 100);
+            }
+          }
+
+          if (this.div.depth && child.depth && this.div.width && child.width) {
+            child.position.z =
+              -this.div.depth / 2 + child.depth / 2 + topOffset;
+            child.position.x = -this.div.width / 2 + child.width / 2;
+            topOffset += child.depth;
+          }
+        });
+        break;
+      }
+      case "column-reverse": {
+        let bottomOffset = 0;
+        this.div.children.map((child) => {
+          if (!child.position) {
+            child.position = { x: 0, y: 0, z: 0 };
+          }
+
+          if (
+            child.width &&
+            child.depth &&
+            this.div.width &&
+            child.style.width
+          ) {
+            let res = DivHelper.getVal(child.style.width);
+
+            if (res.percent) {
+              child.width = this.div.width * (res.val / 100);
+            }
+          }
+
+          if (this.div.depth && child.depth && this.div.width && child.width) {
+            child.position.z =
+              this.div.depth / 2 - child.depth / 2 - bottomOffset;
+            child.position.x = -this.div.width / 2 + child.width / 2;
+            bottomOffset += child.depth;
+          }
+        });
+        break;
+      }
+      case "row": {
+        console.log("not implemented");
+        break;
+      }
+      case "row-reverse": {
+        console.log("not implemented");
+
+        break;
+      }
+      default:
+        break;
     }
   }
 
