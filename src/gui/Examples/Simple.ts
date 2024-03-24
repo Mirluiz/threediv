@@ -2,14 +2,15 @@ import { CSS } from "../../app/css/CSS";
 import { DivProps } from "../../app/html/Div";
 
 class SimpleExamples {
-  get() {
+  example1() {
     let container: DivProps = {
       style: {
         width: 3,
         height: 1,
         depth: 3,
         display: "flex",
-        // justifyContent: "flex-end",
+        justifyContent: "space-between",
+        alignItems: "center",
         // // alignItems: "flex-end",
         // alignItems: "flex-start",
       },
@@ -45,21 +46,77 @@ class SimpleExamples {
       },
     };
 
-    container.children = [child1, child2, child3];
+    let child4: DivProps = {
+      style: {
+        width: 0.05,
+        height: "100%",
+        depth: 1,
+        color: "purple",
+        opacity: 1,
+      },
+    };
 
-    // let child1FrontChild: DivProps = {
-    //   style: { width: "100%", height: 3, depth: 2, color: "red", opacity: 0.5 },
-    // };
-
-    // let child1MiddleChild: DivProps = {
-    //   style: { width: "20%", height: 3, depth: 2, color: "red", opacity: 0.5 },
-    // };
-
-    // let child1BackChild: DivProps = {
-    //   style: { width: "20%", height: 3, depth: 2, color: "red", opacity: 0.5 },
-    // };
+    container.children = [child1, child2, child3, child4];
 
     return container;
+  }
+
+  example2() {
+    let container: DivProps = {
+      style: {
+        width: 3,
+        height: 1,
+        depth: 3,
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+      },
+    };
+
+    let child1: DivProps = {
+      style: {
+        width: 0.5,
+        height: "100%",
+        depth: 0.1,
+        color: "blue",
+        opacity: 1,
+      },
+    };
+
+    container.children = [child1];
+
+    return container;
+  }
+
+  example3() {
+    let container: DivProps = {
+      style: {
+        width: 3,
+        height: 1,
+        depth: 3,
+        display: "flex",
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+      },
+    };
+
+    let child1: DivProps = {
+      style: {
+        width: 0.5,
+        height: "100%",
+        depth: 0.1,
+        color: "blue",
+        opacity: 1,
+      },
+    };
+
+    container.children = [child1];
+
+    return container;
+  }
+
+  get() {
+    return this.example2();
   }
 }
 

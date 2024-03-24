@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Grid } from "@mui/material";
 import "./../global.css";
+import "./../div.css";
 import { DivStructure, Engine } from "../app/Engine";
 import { Scene } from "../three/Scene";
 import { SimpleExamples } from "./Examples/Simple";
@@ -10,45 +11,6 @@ const App = () => {
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    // let childBox1 = {
-    //   style: { width: "20%", height: 3, depth: 2, color: "red", opacity: 0.5 },
-    // };
-
-    // let child2Child1 = {
-    //   style: {
-    //     width: "30%",
-    //     height: "100%",
-    //     depth: "50%",
-    //     color: "blue",
-    //     opacity: 1,
-    //   },
-    // };
-    // let child2Child2 = {
-    //   style: { width: "70%", height: 2, depth: 2, color: "green", opacity: 1 },
-    // };
-
-    // let childBox2 = {
-    //   style: {
-    //     width: "50%",
-    //     height: 2,
-    //     depth: 2,
-    //     display: "flex",
-    //     justifyContent: "flex-end",
-    //   },
-    //   children: [child2Child1, child2Child2],
-    // };
-
-    // let parentBox = {
-    //   style: {
-    //     width: 6,
-    //     height: 2,
-    //     depth: 4,
-    //     display: "flex",
-    //     justifyContent: "center",
-    //   },
-    //   children: [childBox1, childBox2],
-    // };
-
     let simpleContainer = new SimpleExamples();
 
     let divApp = new Engine({
@@ -117,12 +79,21 @@ const App = () => {
   };
 
   return (
-    <Grid
-      style={{ width: "100vw", height: "100vh", border: "1px solid black" }}
-      ref={(r) => {
-        canvasRef.current = r;
-      }}
-    ></Grid>
+    <Grid style={{ width: "100vw", height: "100vh", display: "flex" }}>
+      <Grid
+        style={{ width: "50%", height: "100%", outline: "1px solid black" }}
+        ref={(r) => {
+          canvasRef.current = r;
+        }}
+      ></Grid>
+      <Grid className="divPlayground" style={{ width: "50%", height: "100%" }}>
+        <div id="container">
+          <div id="child1"></div>
+          <div id="child2"></div>
+          <div id="child3"></div>
+        </div>
+      </Grid>
+    </Grid>
   );
 };
 

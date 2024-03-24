@@ -85,12 +85,45 @@ class Flex {
 
     switch (this.div.style.justifyContent) {
       case "space-around": {
+        {
+          let emptySpace = (this.div.width ?? 1) - allChildrenWidth;
+
+          this.div.children.map((child, index, arr) => {
+            if (!child.position) {
+              child.position = { x: 0, y: 0, z: 0 };
+            }
+
+            if (this.div.width && child.width) {
+              child.position.x =
+                -this.div.width / 2 +
+                child.width / 2 +
+                leftOffset +
+                emptySpace / (arr.length + 1);
+              leftOffset += child.width + emptySpace / (arr.length + 1);
+            }
+          });
+        }
         break;
       }
       case "space-evenly": {
         break;
       }
       case "space-between": {
+        {
+          let emptySpace = (this.div.width ?? 1) - allChildrenWidth;
+
+          this.div.children.map((child, index, arr) => {
+            if (!child.position) {
+              child.position = { x: 0, y: 0, z: 0 };
+            }
+
+            if (this.div.width && child.width) {
+              child.position.x =
+                -this.div.width / 2 + child.width / 2 + leftOffset;
+              leftOffset += child.width + emptySpace / (arr.length - 1);
+            }
+          });
+        }
         break;
       }
       case "flex-end": {
