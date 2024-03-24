@@ -41,6 +41,7 @@ class Flex {
   compile() {
     if (this.div.style.display === "flex") {
       this.resize();
+      this.reposition();
 
       if (this.div.style.justifyContent) this.justify();
       if (this.div.style.alignItems) this.align();
@@ -48,18 +49,63 @@ class Flex {
   }
 
   private resize() {
-    let arr = this.div.children.map((child) => {
+    let numberDivsWidth = this.div.children.reduce((sum, child) => {
+      let res = child.style.width && DivHelper.getVal(child.style.width);
+
+      if (res && !res.percent) {
+        return sum + res.val;
+      } else return sum;
+    }, 0);
+
+    let retainEmptySpace = (this.div.width ?? 1) - numberDivsWidth;
+
+    let percentArray = this.div.children.map((child) => {
       if (child.style.width) {
         let res = DivHelper.getVal(child.style.width);
 
         if (res.percent) {
-          return (this.div.width ?? 1) * res.val;
+          return (this.div.width ?? 1) * (res.val / 100);
         } else {
-          return res.val;
+          return 0;
         }
-      }
+      } else return 0;
     });
 
+    let percentWidth = percentArray.reduce((sum, child) => sum + child, 0);
+
+    let difference =
+      (percentWidth - (retainEmptySpace - (this.div.width ?? 0))) / 2;
+    console.log("difference", difference);
+
+    this.div.children.map((child) => {
+      let diffPerChild = difference / (percentArray.length + 1);
+
+      if (this.div.width && child.width) {
+        let childWidth = 0;
+
+        if (child.style.width && DivHelper.isPercent(child.style.width)) {
+          let percent = DivHelper.getVal(child.style.width);
+
+          childWidth =
+            retainEmptySpace * (percent.val / 100) + diffPerChild / 2;
+        } else {
+          childWidth = child.width + -diffPerChild / 4;
+        }
+
+        console.log(
+          "childWidth",
+          percentWidth,
+          child.style.width,
+          diffPerChild,
+          childWidth,
+        );
+
+        child.width = childWidth;
+      }
+    });
+  }
+
+  private reposition() {
     let leftOffset = 0;
     this.div.children.map((child) => {
       if (!child.position) {

@@ -9,11 +9,11 @@
   height: 300px;
   display: flex;
   /* justify-content: space-evenly; */
-  justify-content: space-between;
-  align-items: flex-start;
+  /* justify-content: space-between; */
+  /* align-items: flex-start; */
   position: relative;
 }
-
+/* 
 #container #child1 {
   width: 50px;
   height: 10px;
@@ -35,5 +35,29 @@
 #container #child4 {
   width: 5px;
   height: 100px;
+  background-color: purple;
+} */
+
+#container #child1 {
+  width: 50px;
+  height: 10px;
+  background-color: blue;
+}
+
+#container #child2 {
+  width: 150%;
+  height: 10px;
+  background-color: red;
+}
+
+#container #child3 {
+  width: 50px;
+  height: 10px;
+  background-color: green;
+}
+
+#container #child4 {
+  width: 50px;
+  height: 10px;
   background-color: purple;
 }

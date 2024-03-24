@@ -22,7 +22,9 @@ class DivHelper {
     };
   }
 
-  static isPercent(val: string) {
+  static isPercent(val: string | number) {
+    if (typeof val === "number") return false;
+
     let pattern = /%/g;
     let res = val.replace(pattern, "");
 
