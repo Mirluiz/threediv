@@ -3,8 +3,9 @@ import { Flex, FlexProps } from "./Flex";
 import { MarginProps } from "./Margin";
 import { PaddingProps } from "./Padding";
 
+// TODO: change string | number to value class
 export interface CSSProps extends FlexProps, MarginProps, PaddingProps {
-  display: "flex" | "none" | "inline";
+  display: "flex" | "none" | "block";
   width?: string | number;
   height?: string | number;
   depth?: string | number;
@@ -16,7 +17,7 @@ export interface CSSProps extends FlexProps, MarginProps, PaddingProps {
 class CSS {
   flexCompiler: Flex;
 
-  display: "flex" | "inline" | "none" = "flex";
+  display: "flex" | "block" | "none" = "block";
 
   color?: string;
 
@@ -28,9 +29,6 @@ class CSS {
     if (this.div.style.display === "flex") {
       this.flexCompiler.compile();
     }
-
-    // if (this.div.style.color) {
-    // }
   }
 }
 

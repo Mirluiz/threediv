@@ -3,47 +3,56 @@ import { Grid } from "@mui/material";
 import "./../global.css";
 import { DivStructure, Engine } from "../app/Engine";
 import { Scene } from "../three/Scene";
+import { SimpleExamples } from "./Examples/Simple";
 import * as THREE from "three";
 
 const App = () => {
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    let childBox1 = {
-      style: { width: "20%", height: 3, depth: 2, color: "red", opacity: 0.5 },
-    };
+    // let childBox1 = {
+    //   style: { width: "20%", height: 3, depth: 2, color: "red", opacity: 0.5 },
+    // };
 
-    let child2Child1 = {
-      style: { width: "30%", height: 2, depth: 2, color: "blue", opacity: 1 },
-    };
-    let child2Child2 = {
-      style: { width: "70%", height: 2, depth: 2, color: "green", opacity: 1 },
-    };
+    // let child2Child1 = {
+    //   style: {
+    //     width: "30%",
+    //     height: "100%",
+    //     depth: "50%",
+    //     color: "blue",
+    //     opacity: 1,
+    //   },
+    // };
+    // let child2Child2 = {
+    //   style: { width: "70%", height: 2, depth: 2, color: "green", opacity: 1 },
+    // };
 
-    let childBox2 = {
-      style: {
-        width: "50%",
-        height: 2,
-        depth: 2,
-        display: "flex",
-        justifyContent: "flex-end",
-      },
-      children: [child2Child1, child2Child2],
-    };
+    // let childBox2 = {
+    //   style: {
+    //     width: "50%",
+    //     height: 2,
+    //     depth: 2,
+    //     display: "flex",
+    //     justifyContent: "flex-end",
+    //   },
+    //   children: [child2Child1, child2Child2],
+    // };
 
-    let parentBox = {
-      style: {
-        width: 6,
-        height: 2,
-        depth: 4,
-        display: "flex",
-        justifyContent: "center",
-      },
-      children: [childBox1, childBox2],
-    };
+    // let parentBox = {
+    //   style: {
+    //     width: 6,
+    //     height: 2,
+    //     depth: 4,
+    //     display: "flex",
+    //     justifyContent: "center",
+    //   },
+    //   children: [childBox1, childBox2],
+    // };
+
+    let simpleContainer = new SimpleExamples();
 
     let divApp = new Engine({
-      div: parentBox,
+      div: simpleContainer.get(),
     });
 
     if (canvasRef.current) {

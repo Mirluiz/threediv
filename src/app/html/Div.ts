@@ -1,14 +1,16 @@
 import { Css } from "@mui/icons-material";
 import { CSS, CSSProps } from "../css/CSS";
+import { DivHelper } from "./DivHelper";
 
 export interface DivProps {
   style?: Partial<CSSProps>;
+  children?: Array<DivProps>;
 }
 
 class Div implements DivProps {
   private css: CSS;
   style: Partial<CSSProps> = {
-    display: "flex",
+    display: "block",
   };
 
   width?: number;
@@ -34,8 +36,23 @@ class Div implements DivProps {
     this.resizeDepth();
   }
 
-  private rebuild() {
-    this.css.compile();
+  private reposition() {
+    let topOffset = 0;
+
+    this.children.map((child) => {
+      if (!child.position) {
+        child.position = { x: 0, y: 0, z: 0 };
+      }
+
+      if (this.width && child.width) {
+        child.position.x = -this.width / 2 + child.width / 2;
+      }
+
+      if (this.depth && child.depth) {
+        child.position.z = -this.depth / 2 + topOffset + child.depth / 2;
+        topOffset += child.depth;
+      }
+    });
   }
 
   compile() {
@@ -45,6 +62,8 @@ class Div implements DivProps {
       child.compile();
     });
 
+    this.reposition();
+
     this.css.compile();
   }
 
@@ -53,8 +72,8 @@ class Div implements DivProps {
 
     if (this.parent) {
       if (typeof this.style?.width === "string") {
-        let percentWidth = this.isPercent(this.style.width)
-          ? this.getPercent(this.style.width)
+        let percentWidth = DivHelper.isPercent(this.style.width)
+          ? DivHelper.getPercent(this.style.width)
           : false;
 
         if (percentWidth) {
@@ -77,8 +96,8 @@ class Div implements DivProps {
 
     if (this.parent) {
       if (typeof this.style?.height === "string") {
-        let percentHeight = this.isPercent(this.style.height)
-          ? this.getPercent(this.style.height)
+        let percentHeight = DivHelper.isPercent(this.style.height)
+          ? DivHelper.getPercent(this.style.height)
           : false;
 
         if (percentHeight) {
@@ -101,8 +120,8 @@ class Div implements DivProps {
 
     if (this.parent) {
       if (typeof this.style?.depth === "string") {
-        let percentDepth = this.isPercent(this.style.depth)
-          ? this.getPercent(this.style.depth)
+        let percentDepth = DivHelper.isPercent(this.style.depth)
+          ? DivHelper.getPercent(this.style.depth)
           : false;
 
         if (percentDepth) {
@@ -125,8 +144,8 @@ class Div implements DivProps {
 
     if (this.parent) {
       if (typeof this.style?.width === "string") {
-        let percentWidth = this.isPercent(this.style.width)
-          ? this.getPercent(this.style.width)
+        let percentWidth = DivHelper.isPercent(this.style.width)
+          ? DivHelper.getPercent(this.style.width)
           : false;
 
         if (percentWidth) {
@@ -149,8 +168,8 @@ class Div implements DivProps {
 
     if (this.parent) {
       if (typeof this.style?.height === "string") {
-        let percentHeight = this.isPercent(this.style.height)
-          ? this.getPercent(this.style.height)
+        let percentHeight = DivHelper.isPercent(this.style.height)
+          ? DivHelper.getPercent(this.style.height)
           : false;
 
         if (percentHeight) {
@@ -173,8 +192,8 @@ class Div implements DivProps {
 
     if (this.parent) {
       if (typeof this.style?.depth === "string") {
-        let percentDepth = this.isPercent(this.style.depth)
-          ? this.getPercent(this.style.depth)
+        let percentDepth = DivHelper.isPercent(this.style.depth)
+          ? DivHelper.getPercent(this.style.depth)
           : false;
 
         if (percentDepth) {
@@ -190,20 +209,6 @@ class Div implements DivProps {
     }
 
     return safeDepth;
-  }
-
-  private isPercent(val: string) {
-    let pattern = /%/g;
-    let res = val.replace(pattern, "");
-
-    return !Number.isNaN(+res);
-  }
-
-  private getPercent(val: string): number {
-    let pattern = /%/g;
-    let res = val.replace(pattern, "");
-
-    return +res;
   }
 }
 
