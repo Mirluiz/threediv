@@ -9,6 +9,7 @@ import * as THREE from "three";
 
 const App = () => {
   const canvasRef = useRef<HTMLDivElement | null>(null);
+  const cssDiv = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let simpleContainer = new SimpleExamples();
@@ -28,6 +29,8 @@ const App = () => {
 
       scene.animate();
     }
+
+    generateDivNet();
   }, []);
 
   const generateMesh = (divStructure: DivStructure) => {
@@ -78,6 +81,38 @@ const App = () => {
     }
   };
 
+  const generateDivNet = () => {
+    if (cssDiv.current) {
+      let _i = 0;
+      let _max = 300 / 10;
+      while (_i < _max) {
+        let horizontalDiv = document.createElement("div");
+        horizontalDiv.className = "horizontalDiv";
+        horizontalDiv.style.position = "absolute";
+        horizontalDiv.style.background = "black";
+        horizontalDiv.style.height = "1px";
+        horizontalDiv.style.width = "300px";
+        horizontalDiv.style.top = `${-1 + _i * 10}px`;
+        horizontalDiv.style.left = `0`;
+        horizontalDiv.style.right = `0`;
+
+        let verticalDiv = document.createElement("div");
+        verticalDiv.className = "verticalDiv";
+        verticalDiv.style.position = "absolute";
+        verticalDiv.style.background = "black";
+        verticalDiv.style.height = "300px";
+        verticalDiv.style.width = "1px";
+        verticalDiv.style.top = `0`;
+        verticalDiv.style.left = `${-1 + _i * 10}px`;
+
+        cssDiv.current.appendChild(horizontalDiv);
+        cssDiv.current.appendChild(verticalDiv);
+
+        _i++;
+      }
+    }
+  };
+
   return (
     <Grid style={{ width: "100vw", height: "100vh", display: "flex" }}>
       <Grid
@@ -87,7 +122,7 @@ const App = () => {
         }}
       ></Grid>
       <Grid className="divPlayground" style={{ width: "50%", height: "100%" }}>
-        <div id="container">
+        <div id="container" ref={cssDiv}>
           <div id="child1"></div>
           <div id="child2"></div>
           <div id="child3"></div>

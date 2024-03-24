@@ -9,7 +9,8 @@ class SimpleExamples {
         height: 1,
         depth: 3,
         display: "flex",
-        justifyContent: "space-between",
+        justifyContent: "space-evenly",
+        // justifyContent: "space-around",
         alignItems: "center",
         // // alignItems: "flex-end",
         // alignItems: "flex-start",
@@ -56,7 +57,7 @@ class SimpleExamples {
       },
     };
 
-    container.children = [child1, child2, child3, child4];
+    container.children = [child1, child2, child3];
 
     return container;
   }
@@ -116,7 +117,7 @@ class SimpleExamples {
   }
 
   get() {
-    return this.example2();
+    return this.example1();
   }
 }
 

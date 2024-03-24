@@ -2,6 +2,7 @@ import { Div } from "../html/Div";
 import { DivHelper } from "../html/DivHelper";
 
 export interface FlexProps {
+  gap: string | number;
   flex: "";
   flexBasis: "";
   flexDirection: "";
@@ -85,80 +86,91 @@ class Flex {
 
     switch (this.div.style.justifyContent) {
       case "space-around": {
-        {
-          let emptySpace = (this.div.width ?? 1) - allChildrenWidth;
+        let emptySpace = (this.div.width ?? 1) - allChildrenWidth;
 
-          this.div.children.map((child, index, arr) => {
-            if (!child.position) {
-              child.position = { x: 0, y: 0, z: 0 };
-            }
+        this.div.children.map((child, index, arr) => {
+          if (!child.position) {
+            child.position = { x: 0, y: 0, z: 0 };
+          }
 
-            if (this.div.width && child.width) {
-              child.position.x =
-                -this.div.width / 2 +
-                child.width / 2 +
-                leftOffset +
-                emptySpace / (arr.length + 1);
-              leftOffset += child.width + emptySpace / (arr.length + 1);
-            }
-          });
-        }
+          if (this.div.width && child.width) {
+            child.position.x =
+              -this.div.width / 2 +
+              child.width / 2 +
+              leftOffset +
+              (emptySpace / arr.length) * 0.5;
+            leftOffset += child.width + emptySpace / arr.length;
+          }
+        });
         break;
       }
       case "space-evenly": {
+        let emptySpace = (this.div.width ?? 1) - allChildrenWidth;
+
+        this.div.children.map((child, index, arr) => {
+          if (!child.position) {
+            child.position = { x: 0, y: 0, z: 0 };
+          }
+
+          if (this.div.width && child.width) {
+            leftOffset += +(emptySpace / (arr.length + 1)).toFixed(1);
+
+            child.position.x =
+              -this.div.width / 2 + child.width / 2 + leftOffset;
+
+            leftOffset += child.width;
+          }
+        });
         break;
       }
       case "space-between": {
-        {
-          let emptySpace = (this.div.width ?? 1) - allChildrenWidth;
+        let emptySpace = (this.div.width ?? 1) - allChildrenWidth;
 
-          this.div.children.map((child, index, arr) => {
-            if (!child.position) {
-              child.position = { x: 0, y: 0, z: 0 };
-            }
+        this.div.children.map((child, index, arr) => {
+          if (!child.position) {
+            child.position = { x: 0, y: 0, z: 0 };
+          }
 
-            if (this.div.width && child.width) {
-              child.position.x =
-                -this.div.width / 2 + child.width / 2 + leftOffset;
-              leftOffset += child.width + emptySpace / (arr.length - 1);
-            }
-          });
-        }
+          if (this.div.width && child.width) {
+            child.position.x =
+              -this.div.width / 2 + child.width / 2 + leftOffset;
+            leftOffset += child.width + emptySpace / (arr.length - 1);
+          }
+        });
+
         break;
       }
       case "flex-end": {
-        {
-          this.div.children.map((child) => {
-            if (!child.position) {
-              child.position = { x: 0, y: 0, z: 0 };
-            }
+        this.div.children.map((child) => {
+          if (!child.position) {
+            child.position = { x: 0, y: 0, z: 0 };
+          }
 
-            if (this.div.width && child.width) {
-              child.position.x =
-                this.div.width / 2 -
-                allChildrenWidth +
-                child.width / 2 +
-                leftOffset;
-              leftOffset += child.width;
-            }
-          });
-        }
+          if (this.div.width && child.width) {
+            child.position.x =
+              this.div.width / 2 -
+              allChildrenWidth +
+              child.width / 2 +
+              leftOffset;
+            leftOffset += child.width;
+          }
+        });
+
         break;
       }
       case "flex-start": {
-        {
-          this.div.children.map((child) => {
-            if (!child.position) {
-              child.position = { x: 0, y: 0, z: 0 };
-            }
+        this.div.children.map((child) => {
+          if (!child.position) {
+            child.position = { x: 0, y: 0, z: 0 };
+          }
 
-            if (this.div.width && child.width) {
-              child.position.x =
-                -this.div.width / 2 + child.width / 2 + leftOffset;
-              leftOffset += child.width;
-            }
-          });
-        }
+          if (this.div.width && child.width) {
+            child.position.x =
+              -this.div.width / 2 + child.width / 2 + leftOffset;
+            leftOffset += child.width;
+          }
+        });
+
         break;
       }
       case "center": {

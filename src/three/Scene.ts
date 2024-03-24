@@ -53,8 +53,8 @@ class Scene {
     const axis = new THREE.AxesHelper(20);
     this.scene.add(axis);
 
-    const netSize = 50;
-    const helper = new THREE.GridHelper(netSize, netSize);
+    const netSize = 10;
+    const helper = new THREE.GridHelper(netSize, 100);
     this.scene.add(helper);
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 1.3);
@@ -79,7 +79,7 @@ class Scene {
 
     this.stats = new Stats();
 
-    this.setCamera("3D");
+    this.setCamera("2D");
   }
 
   animate() {
@@ -93,29 +93,42 @@ class Scene {
     if (!this.htmlElement) return;
 
     let pos = { ...this.camera.position };
-    let zoom = 1;
+    let zoom = 100;
 
     this.controls.reset();
 
-    this.camera = new THREE.PerspectiveCamera(
-      30,
-      this.htmlElement.clientWidth / this.htmlElement.clientHeight,
-      0.1,
-      100,
-    );
+    if (mode === "2D") {
+      this.camera = new THREE.OrthographicCamera(
+        this.htmlElement.clientWidth / -2,
+        this.htmlElement.clientWidth / 2,
+        this.htmlElement.clientHeight / 2,
+        this.htmlElement.clientHeight / -2,
+        0.1,
+        100,
+      );
 
-    this.camera.position.set(pos.x, 10, pos.z);
+      pos.z = 0;
+      pos.x = 0;
+      pos.y = 0;
+      this.camera.position.set(0, 1, 0);
+    } else {
+      this.camera = new THREE.PerspectiveCamera(
+        30,
+        this.htmlElement.clientWidth / this.htmlElement.clientHeight,
+        0.1,
+        100,
+      );
 
-    if (this.controls) {
-      this.controls.minPolarAngle = 0;
-      this.controls.maxPolarAngle = Math.PI;
+      this.camera.position.set(pos.x, 10, pos.z);
+
+      if (this.controls) {
+        this.controls.minPolarAngle = 0;
+        this.controls.maxPolarAngle = Math.PI;
+      }
     }
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-    this.controls.target.set(pos.x, 0, pos.z);
-    this.controls.update();
 
-    this.camera.position.setX(pos.x);
-    this.camera.position.setZ(pos.z);
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    this.controls.target.set(pos.x, pos.y, pos.z);
 
     this.camera.zoom = zoom;
 
