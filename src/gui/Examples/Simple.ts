@@ -209,8 +209,66 @@ class SimpleExamples {
     return container;
   }
 
+  example6() {
+    let container: DivProps = {
+      style: {
+        width: 3,
+        height: 1,
+        depth: 3,
+        display: "flex",
+        flexDirection: "column",
+      },
+    };
+
+    let child1: DivProps = {
+      style: {
+        width: "100%",
+        height: "100%",
+        depth: 1,
+        color: "blue",
+        opacity: 0.1,
+        display: "flex",
+        justifyContent: "space-between",
+      },
+      children: [
+        {
+          style: {
+            width: 1,
+            height: "100%",
+            depth: 0.1,
+            color: "purple",
+            opacity: 1,
+          },
+        },
+        {
+          style: {
+            width: 1,
+            height: "100%",
+            depth: 0.1,
+            color: "red",
+            opacity: 1,
+          },
+        },
+      ],
+    };
+
+    let child2: DivProps = {
+      style: {
+        width: "100%",
+        height: "100%",
+        depth: 0.1,
+        color: "red",
+        opacity: 1,
+      },
+    };
+
+    container.children = [child1, child2];
+
+    return container;
+  }
+
   get() {
-    return this.example5();
+    return this.example6();
   }
 }
 

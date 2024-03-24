@@ -125,10 +125,12 @@ const App = () => {
       ></Grid>
       <Grid className="divPlayground" style={{ width: "50%", height: "100%" }}>
         <div id="container" ref={cssDiv}>
-          <div id="child1"></div>
+          <div id="child1">
+            <div id="child1_1"></div>
+            <div id="child1_2"></div>
+          </div>
           <div id="child2"></div>
-          <div id="child3"></div>
-          {/* <div id="child4"></div> */}
+          {/* <div id="child3"></div> */}
         </div>
       </Grid>
     </Grid>
