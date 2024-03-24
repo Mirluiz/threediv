@@ -48,7 +48,7 @@ class Flex {
     }
   }
 
-  private resize() {
+  private resize_experimental() {
     let numberDivsWidth = this.div.children.reduce((sum, child) => {
       let res = child.style.width && DivHelper.getVal(child.style.width);
 
@@ -75,7 +75,6 @@ class Flex {
 
     let difference =
       (percentWidth - (retainEmptySpace - (this.div.width ?? 0))) / 2;
-    console.log("difference", difference);
 
     this.div.children.map((child) => {
       let diffPerChild = difference / (percentArray.length + 1);
@@ -86,19 +85,39 @@ class Flex {
         if (child.style.width && DivHelper.isPercent(child.style.width)) {
           let percent = DivHelper.getVal(child.style.width);
 
-          childWidth =
-            retainEmptySpace * (percent.val / 100) + diffPerChild / 2;
+          childWidth = 100 / percent.val + diffPerChild / 2;
+          console.log("100 / percent.val", 100 / percent.val);
         } else {
           childWidth = child.width + -diffPerChild / 4;
         }
 
-        console.log(
-          "childWidth",
-          percentWidth,
-          child.style.width,
-          diffPerChild,
-          childWidth,
-        );
+        child.width = childWidth;
+      }
+    });
+  }
+
+  private resize() {
+    let numberDivsWidth = this.div.children.reduce((sum, child) => {
+      let res = child.style.width && DivHelper.getVal(child.style.width);
+
+      if (res && !res.percent) {
+        return sum + res.val;
+      } else return sum;
+    }, 0);
+
+    let retainEmptySpace = (this.div.width ?? 1) - numberDivsWidth;
+
+    this.div.children.map((child) => {
+      if (this.div.width && child.width) {
+        let childWidth = 0;
+
+        if (child.style.width && DivHelper.isPercent(child.style.width)) {
+          let percent = DivHelper.getVal(child.style.width);
+
+          childWidth = retainEmptySpace * (percent.val / 100);
+        } else {
+          childWidth = child.width;
+        }
 
         child.width = childWidth;
       }
