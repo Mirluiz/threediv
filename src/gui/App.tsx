@@ -95,6 +95,7 @@ const App = () => {
         horizontalDiv.style.top = `${-1 + _i * 10}px`;
         horizontalDiv.style.left = `0`;
         horizontalDiv.style.right = `0`;
+        horizontalDiv.style.zIndex = `-1`;
 
         let verticalDiv = document.createElement("div");
         verticalDiv.className = "verticalDiv";
@@ -104,6 +105,7 @@ const App = () => {
         verticalDiv.style.width = "1px";
         verticalDiv.style.top = `0`;
         verticalDiv.style.left = `${-1 + _i * 10}px`;
+        verticalDiv.style.zIndex = `-1`;
 
         cssDiv.current.appendChild(horizontalDiv);
         cssDiv.current.appendChild(verticalDiv);
