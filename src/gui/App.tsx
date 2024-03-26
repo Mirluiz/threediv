@@ -5,14 +5,17 @@ import "./../div.css";
 import { DivStructure, Engine } from "../app/Engine";
 import { Scene } from "../three/Scene";
 import { SimpleExamples } from "./Examples/Simple";
+import { SimplePadding as SimplePaddingTHREE } from "./Examples/SamplePadding";
 import * as THREE from "three";
+import { Sample } from "./DivExamples/Sample";
+import { SamplePadding } from "./DivExamples/SamplePadding";
 
 const App = () => {
   const canvasRef = useRef<HTMLDivElement | null>(null);
   const cssDiv = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    let simpleContainer = new SimpleExamples();
+    let simpleContainer = new SimplePaddingTHREE();
 
     let divApp = new Engine({
       div: simpleContainer.get(),
@@ -92,7 +95,7 @@ const App = () => {
         horizontalDiv.style.background = "black";
         horizontalDiv.style.height = "0.1px";
         horizontalDiv.style.width = "300px";
-        horizontalDiv.style.top = `${-0.1 + _i * 10}px`;
+        horizontalDiv.style.top = `${_i * 10}px`;
         horizontalDiv.style.left = `0`;
         horizontalDiv.style.right = `0`;
         horizontalDiv.style.zIndex = `-1`;
@@ -104,7 +107,7 @@ const App = () => {
         verticalDiv.style.height = "300px";
         verticalDiv.style.width = "0.1px";
         verticalDiv.style.top = `0`;
-        verticalDiv.style.left = `${-0.1 + _i * 10}px`;
+        verticalDiv.style.left = `${_i * 10}px`;
         verticalDiv.style.zIndex = `-1`;
 
         cssDiv.current.appendChild(horizontalDiv);
@@ -125,12 +128,7 @@ const App = () => {
       ></Grid>
       <Grid className="divPlayground" style={{ width: "50%", height: "100%" }}>
         <div id="container" ref={cssDiv}>
-          <div id="child1">
-            <div id="child1_1"></div>
-            <div id="child1_2"></div>
-          </div>
-          <div id="child2"></div>
-          {/* <div id="child3"></div> */}
+          <SamplePadding />
         </div>
       </Grid>
     </Grid>

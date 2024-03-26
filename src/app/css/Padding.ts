@@ -1,3 +1,5 @@
+import { Div } from "../html/Div";
+
 export interface PaddingProps {
   padding: number | string; // top right bottom left back front
 
@@ -8,3 +10,16 @@ export interface PaddingProps {
   paddingBack: number | string;
   paddingFront: number | string;
 }
+
+
+class Padding {
+  constructor(readonly div: Div) {}
+
+  compile(){
+    if(this.div.style.padding){
+      // this.div.children.
+    }
+  }
+}
+
+export Padding
